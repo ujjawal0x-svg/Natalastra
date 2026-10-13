@@ -1,0 +1,342 @@
+{
+  "DELETE FROM natal_diagnostics WHERE created_at < ?": {
+    "id": "1b6a152077298eaff242e909dc9b334203dd8fe5396c72d9428fc4fc5e537c27",
+    "sql": "DELETE FROM public.natal_diagnostics WHERE created_at < ?",
+    "returns": false
+  },
+  "SELECT COUNT(*) AS total FROM natal_diagnostics WHERE session_id = ? AND created_at >= ?": {
+    "id": "b22bc06767e51bd7fdbd9a141cb896e74841f1777b9357212b14e87b08c6ca61",
+    "sql": "SELECT COUNT(*) AS total FROM public.natal_diagnostics WHERE session_id = ? AND created_at >= ?",
+    "returns": true
+  },
+  "INSERT INTO natal_diagnostics (id,session_id,payload,created_at) SELECT ?,?,?,? WHERE (SELECT COUNT(*) FROM natal_diagnostics WHERE created_at >= ?) < 1000": {
+    "id": "cc0a1558e9405ff68aeae346c0de8424347f9679166919799e2e0422fbedbb21",
+    "sql": "INSERT INTO public.natal_diagnostics (id,session_id,payload,created_at) SELECT ?,?,?,? WHERE (SELECT COUNT(*) FROM public.natal_diagnostics WHERE created_at >= ?) < 1000",
+    "returns": false
+  },
+  "SELECT payload,created_at FROM natal_diagnostics WHERE created_at >= ? ORDER BY created_at DESC LIMIT 500": {
+    "id": "7caf38188949a37a613e539b1bc0e156b9b4dc756a12b3642797ef6e753ce880",
+    "sql": "SELECT payload,created_at FROM public.natal_diagnostics WHERE created_at >= ? ORDER BY created_at DESC LIMIT 500",
+    "returns": true
+  },
+  "SELECT * FROM natal_reflections WHERE user_id = ? ORDER BY created_at DESC": {
+    "id": "6f2cb51b78a3ff58f1aac6df786bdb153a0f3acf1004a251514ebc103934e83e",
+    "sql": "SELECT * FROM public.natal_reflections WHERE user_id = ? ORDER BY created_at DESC",
+    "returns": true
+  },
+  "SELECT count(*) AS total FROM natal_reflections WHERE user_id = ?": {
+    "id": "72e9cc5f13ae8f818b22ff31b839057eeea2547e2134236acdd08f40683d7f16",
+    "sql": "SELECT count(*) AS total FROM public.natal_reflections WHERE user_id = ?",
+    "returns": true
+  },
+  "INSERT INTO natal_reflections (id,user_id,profile_key,day,payload,created_at) VALUES (?,?,?,?,?,?)": {
+    "id": "117347a4dff70a3622d1f332b2d93b44dc7f60fbf582d98dff2836d0f0d381c6",
+    "sql": "INSERT INTO public.natal_reflections (id,user_id,profile_key,day,payload,created_at) VALUES (?,?,?,?,?,?)",
+    "returns": false
+  },
+  "SELECT * FROM natal_reflections WHERE id = ? AND user_id = ?": {
+    "id": "8e48b6a4b1180ce00cbc2d3d27dd87ea6fcfda9c0a6f40a016f5843d74f9b11f",
+    "sql": "SELECT * FROM public.natal_reflections WHERE id = ? AND user_id = ?",
+    "returns": true
+  },
+  "DELETE FROM natal_reflections WHERE id = ? AND user_id = ?": {
+    "id": "633712019c44bd30ab1f4559f31afc7f064d122420cde685b370bcd59d38aaad",
+    "sql": "DELETE FROM public.natal_reflections WHERE id = ? AND user_id = ?",
+    "returns": false
+  },
+  "UPDATE natal_reflections SET payload = ? WHERE id = ? AND user_id = ?": {
+    "id": "233e60a897e1b7e0671dc5ee55dd11047b30e71e20249bd91f522342ab31425b",
+    "sql": "UPDATE public.natal_reflections SET payload = ? WHERE id = ? AND user_id = ?",
+    "returns": false
+  },
+  "SELECT enabled FROM natal_research_consent WHERE user_id = ?": {
+    "id": "dbc217ee483fdb154a28d3e50b9abf506df99d9edd7136f266488881898fb012",
+    "sql": "SELECT enabled FROM public.natal_research_consent WHERE user_id = ?",
+    "returns": true
+  },
+  "SELECT event, COUNT(*) AS days, COUNT(DISTINCT user_id) AS users FROM natal_research_events WHERE day >= ? AND user_id != ? GROUP BY event": {
+    "id": "efcd44b7972838790df9c08f65329ffeb0059f95ef1478aa92e4d1b91403f91d",
+    "sql": "SELECT event, COUNT(*) AS days, COUNT(DISTINCT user_id) AS users FROM public.natal_research_events WHERE day >= ? AND user_id != ? GROUP BY event",
+    "returns": true
+  },
+  "SELECT feature,rating,COUNT(*) AS total FROM natal_product_feedback WHERE user_id != ? GROUP BY feature,rating": {
+    "id": "8110ef7f78adc1c58da20f21758484c9fed01e3ed1263bdc2011df74a2e75af3",
+    "sql": "SELECT feature,rating,COUNT(*) AS total FROM public.natal_product_feedback WHERE user_id != ? GROUP BY feature,rating",
+    "returns": true
+  },
+  "SELECT json_extract(r.payload,'$.rating') AS rating,COUNT(*) AS total FROM natal_reflections r JOIN natal_research_consent c ON c.user_id = r.user_id AND c.enabled = 1 WHERE r.created_at >= ? AND r.user_id != ? GROUP BY rating": {
+    "id": "8eedda0a2663756c1f50dd0fe15f8bb7b2cf4ce18b5580c19c89af0d28dc1ce8",
+    "sql": "SELECT (r.payload::jsonb ->> 'rating') AS rating,COUNT(*) AS total FROM public.natal_reflections r JOIN public.natal_research_consent c ON c.user_id = r.user_id AND c.enabled = 1 WHERE r.created_at >= ? AND r.user_id != ? GROUP BY rating",
+    "returns": true
+  },
+  "WITH firsts AS (SELECT user_id,MIN(day) AS first_day FROM natal_research_events WHERE event = 'visit' AND day >= ? AND user_id != ? GROUP BY user_id) SELECT COUNT(*) AS eligible,COALESCE(SUM(CASE WHEN EXISTS(SELECT 1 FROM natal_research_events e WHERE e.user_id = f.user_id AND e.event = 'visit' AND julianday(e.day)-julianday(f.first_day) BETWEEN 7 AND 13) THEN 1 ELSE 0 END),0) AS returned FROM firsts f WHERE first_day <= date('now','-13 days')": {
+    "id": "8767f27740bf8fa86fd97af6501af5167fc068f4229f34d428da0042426082a4",
+    "sql": "WITH firsts AS (SELECT user_id,MIN(day) AS first_day FROM public.natal_research_events WHERE event = 'visit' AND day >= ? AND user_id != ? GROUP BY user_id) SELECT COUNT(*) AS eligible,COALESCE(SUM(CASE WHEN EXISTS(SELECT 1 FROM public.natal_research_events e WHERE e.user_id = f.user_id AND e.event = 'visit' AND (e.day::date - f.first_day::date) BETWEEN 7 AND 13) THEN 1 ELSE 0 END),0) AS returned FROM firsts f WHERE first_day <= to_char(CURRENT_DATE - INTERVAL '13 days','YYYY-MM-DD')",
+    "returns": true
+  },
+  "SELECT feature,rating,comment,created_at FROM natal_product_feedback WHERE comment != '' AND user_id != ? ORDER BY created_at DESC LIMIT 25": {
+    "id": "30aa7cbd87129f4d1f92be1f2819b7387158a2d6e05d9d8acc56a7ee3ca3f5a2",
+    "sql": "SELECT feature,rating,comment,created_at FROM public.natal_product_feedback WHERE comment != '' AND user_id != ? ORDER BY created_at DESC LIMIT 25",
+    "returns": true
+  },
+  "SELECT feature,rating,comment,created_at FROM natal_product_feedback WHERE user_id = ? ORDER BY created_at DESC LIMIT 25": {
+    "id": "061e030bd7fceb2d41b18708efbaed96ce40a84fce0b1dde758c0c589a8d20e6",
+    "sql": "SELECT feature,rating,comment,created_at FROM public.natal_product_feedback WHERE user_id = ? ORDER BY created_at DESC LIMIT 25",
+    "returns": true
+  },
+  "INSERT INTO natal_research_consent (user_id,enabled,updated_at) VALUES (?,?,?) ON CONFLICT(user_id) DO UPDATE SET enabled=excluded.enabled,updated_at=excluded.updated_at": {
+    "id": "f4decf4496b616115389e9379d2fe1466e66f21a438545c09183ad2a1510aba4",
+    "sql": "INSERT INTO public.natal_research_consent (user_id,enabled,updated_at) VALUES (?,?,?) ON CONFLICT(user_id) DO UPDATE SET enabled=excluded.enabled,updated_at=excluded.updated_at",
+    "returns": false
+  },
+  "DELETE FROM natal_research_events WHERE user_id = ?": {
+    "id": "4104718a1afcb4fa776895e29941e86ebda4e80bdc335dcbc95408b90fb92ecd",
+    "sql": "DELETE FROM public.natal_research_events WHERE user_id = ?",
+    "returns": false
+  },
+  "DELETE FROM natal_research_events WHERE day < date('now','-90 days')": {
+    "id": "3ab7cc54d2a8c779c27cb53904e930cbcb5bedba958488c91572563b76dc29b7",
+    "sql": "DELETE FROM public.natal_research_events WHERE day < to_char(CURRENT_DATE - INTERVAL '90 days','YYYY-MM-DD')",
+    "returns": false
+  },
+  "SELECT COUNT(*) AS total FROM natal_product_feedback WHERE user_id = ?": {
+    "id": "637b290640e993eb270ddca78228a04b8a0dcbc6fc67e1ea188a130997d382e0",
+    "sql": "SELECT COUNT(*) AS total FROM public.natal_product_feedback WHERE user_id = ?",
+    "returns": true
+  },
+  "INSERT INTO natal_product_feedback (id,user_id,feature,rating,comment,created_at) VALUES (?,?,?,?,?,?)": {
+    "id": "5d185605bf41429ff48686f407b13220f83300d4739bbbfabc49195245164bd7",
+    "sql": "INSERT INTO public.natal_product_feedback (id,user_id,feature,rating,comment,created_at) VALUES (?,?,?,?,?,?)",
+    "returns": false
+  },
+  "DELETE FROM natal_product_feedback WHERE user_id = ?": {
+    "id": "12a0d67f8a6fc4379f2030bc344143e74e5918afec030d9ac6e0dc89917e02ef",
+    "sql": "DELETE FROM public.natal_product_feedback WHERE user_id = ?",
+    "returns": false
+  },
+  "SELECT id,kind,payload,created_at FROM natal_studio WHERE user_id = ? ORDER BY created_at DESC": {
+    "id": "eedd5dbd6bf6f48cb9f5ddcd045ccb2e9bded006beb59048bcf9b9c8ee7906e7",
+    "sql": "SELECT id,kind,payload,created_at FROM public.natal_studio WHERE user_id = ? ORDER BY created_at DESC",
+    "returns": true
+  },
+  "SELECT count(*) AS total FROM natal_studio WHERE user_id = ?": {
+    "id": "9b71ac21e8b11b6593f5a6f199c23116856b5768b8928a3eeb910770aa170748",
+    "sql": "SELECT count(*) AS total FROM public.natal_studio WHERE user_id = ?",
+    "returns": true
+  },
+  "INSERT INTO natal_studio (id,user_id,kind,payload,created_at) VALUES (?,?,?,?,?)": {
+    "id": "79f9ebefa7f44bcd64152082bddb59b81e8cc90ac62b39b3b25b44c09a48b7f9",
+    "sql": "INSERT INTO public.natal_studio (id,user_id,kind,payload,created_at) VALUES (?,?,?,?,?)",
+    "returns": false
+  },
+  "SELECT id,kind,payload,created_at FROM natal_studio WHERE id = ? AND user_id = ?": {
+    "id": "574e81746aecd75c4014e064238e9af23291f50f1662e1bf07e82bb98f25b3f0",
+    "sql": "SELECT id,kind,payload,created_at FROM public.natal_studio WHERE id = ? AND user_id = ?",
+    "returns": true
+  },
+  "DELETE FROM natal_studio WHERE id = ? AND user_id = ?": {
+    "id": "2059fb48c8fbbf493dd6e5f1b7862d0d37f64a183587fd9f79c681a467886abc",
+    "sql": "DELETE FROM public.natal_studio WHERE id = ? AND user_id = ?",
+    "returns": false
+  },
+  "UPDATE natal_studio SET payload = ? WHERE id = ? AND user_id = ?": {
+    "id": "ba107db560ac96372a82bd88cbfe865cf45e4c6b71adb819306aa91e01cf2655",
+    "sql": "UPDATE public.natal_studio SET payload = ? WHERE id = ? AND user_id = ?",
+    "returns": false
+  },
+  "SELECT id, name, birth_data, updated_at FROM natal_profiles WHERE user_id = ? ORDER BY updated_at DESC": {
+    "id": "79d3f65ac6f76a7eaee6f291bd36f87421161a51a6f397881b40169a55762505",
+    "sql": "SELECT id, name, birth_data, updated_at FROM public.natal_profiles WHERE user_id = ? ORDER BY updated_at DESC",
+    "returns": true
+  },
+  "SELECT id, title, body, mood, created_at FROM natal_journal WHERE user_id = ? ORDER BY created_at DESC": {
+    "id": "df6d67e8d2ebb6efc30bdc9c108bd564ff5b0be606262fc69aedf2ccc0335c00",
+    "sql": "SELECT id, title, body, mood, created_at FROM public.natal_journal WHERE user_id = ? ORDER BY created_at DESC",
+    "returns": true
+  },
+  "SELECT id, title, body, mood, created_at FROM natal_journal WHERE user_id = ? ORDER BY created_at DESC LIMIT 60": {
+    "id": "059b177a753e5d0f1e8a7487122de4bad053dd197816c9b9550fc2f2a1fe4f95",
+    "sql": "SELECT id, title, body, mood, created_at FROM public.natal_journal WHERE user_id = ? ORDER BY created_at DESC LIMIT 60",
+    "returns": true
+  },
+  "SELECT count(*) as total FROM natal_journal WHERE user_id = ?": {
+    "id": "0cce9123066ae3673069c7475251418194a656f4ea53e92a13ed24f59037f5f6",
+    "sql": "SELECT count(*) as total FROM public.natal_journal WHERE user_id = ?",
+    "returns": true
+  },
+  "SELECT service,day,count FROM natal_service_usage WHERE user_id = ? ORDER BY day DESC": {
+    "id": "50afdc620121fdc678a765087e7f86cd368c0830a700f7f8fe9fb36547c0d14d",
+    "sql": "SELECT service,day,count FROM public.natal_service_usage WHERE user_id = ? ORDER BY day DESC",
+    "returns": true
+  },
+  "SELECT enabled,updated_at FROM natal_research_consent WHERE user_id = ?": {
+    "id": "4571d5b40f032efbeeadc465d3948b77a306c05a7d567cad0d1f6062d632fe51",
+    "sql": "SELECT enabled,updated_at FROM public.natal_research_consent WHERE user_id = ?",
+    "returns": true
+  },
+  "SELECT event,day FROM natal_research_events WHERE user_id = ? ORDER BY day DESC": {
+    "id": "8f2af3b8af36da2307c3e8d43ad5048ac68d0a48e21298fe25e63d84fdc617c8",
+    "sql": "SELECT event,day FROM public.natal_research_events WHERE user_id = ? ORDER BY day DESC",
+    "returns": true
+  },
+  "SELECT id,feature,rating,comment,created_at FROM natal_product_feedback WHERE user_id = ? ORDER BY created_at DESC": {
+    "id": "36845c01702e5fb873491bbb321cb046acefbd53ffd4861a41b6d6b65d895af1",
+    "sql": "SELECT id,feature,rating,comment,created_at FROM public.natal_product_feedback WHERE user_id = ? ORDER BY created_at DESC",
+    "returns": true
+  },
+  "SELECT id,day,payload,created_at FROM natal_reflections WHERE user_id = ? ORDER BY created_at DESC": {
+    "id": "47385935fd47db5d8eb7cb741935ed049b9d4e9ec9db5210075117c9d6c3002e",
+    "sql": "SELECT id,day,payload,created_at FROM public.natal_reflections WHERE user_id = ? ORDER BY created_at DESC",
+    "returns": true
+  },
+  "SELECT count(*) as total FROM natal_profiles WHERE user_id = ?": {
+    "id": "de411e01c52d62af19b8a6a6fead4c47a8ffd350c584bd49cdaa07308effa9c8",
+    "sql": "SELECT count(*) as total FROM public.natal_profiles WHERE user_id = ?",
+    "returns": true
+  },
+  "SELECT id FROM natal_profiles WHERE id = ? AND user_id = ?": {
+    "id": "4359235e911bba30cdbcbe458f2be1af8f86432eea0792b519427db6500a2453",
+    "sql": "SELECT id FROM public.natal_profiles WHERE id = ? AND user_id = ?",
+    "returns": true
+  },
+  "UPDATE natal_profiles SET name = ?, birth_data = ?, updated_at = ? WHERE id = ? AND user_id = ?": {
+    "id": "31b0209bdf61a746064f8b6caff640c106ea20e8cf6540af5dc93b18ba3d6558",
+    "sql": "UPDATE public.natal_profiles SET name = ?, birth_data = ?, updated_at = ? WHERE id = ? AND user_id = ?",
+    "returns": false
+  },
+  "INSERT INTO natal_profiles (id,user_id,name,birth_data,updated_at) VALUES (?,?,?,?,?)": {
+    "id": "f6ffe4fa7286d84134f6c83b1601346f364a38c27a6a82a4cefc43caf52e44d7",
+    "sql": "INSERT INTO public.natal_profiles (id,user_id,name,birth_data,updated_at) VALUES (?,?,?,?,?)",
+    "returns": false
+  },
+  "INSERT INTO natal_journal (id,user_id,title,body,mood,created_at) VALUES (?,?,?,?,?,?)": {
+    "id": "e9c2b8472d764f982e0593a44a6db9122399a9e070dfda13a2768382ffbb0247",
+    "sql": "INSERT INTO public.natal_journal (id,user_id,title,body,mood,created_at) VALUES (?,?,?,?,?,?)",
+    "returns": false
+  },
+  "DELETE FROM natal_journal WHERE id = ? AND user_id = ?": {
+    "id": "235500a4c7c8654a2ec7dc0a6dacd634ed1fd7394c209f4c58aa4fbc00cb888e",
+    "sql": "DELETE FROM public.natal_journal WHERE id = ? AND user_id = ?",
+    "returns": false
+  },
+  "DELETE FROM natal_profiles WHERE id = ? AND user_id = ?": {
+    "id": "6e9067306d9d28e53e6491821890acf2bcea2a959cc85a4d7e74afdb45009d7c",
+    "sql": "DELETE FROM public.natal_profiles WHERE id = ? AND user_id = ?",
+    "returns": false
+  },
+  "DELETE FROM natal_journal WHERE user_id = ?": {
+    "id": "84c214ff6bb9575f326ec5dca853559480a85454986e954a4b16649a46dffb15",
+    "sql": "DELETE FROM public.natal_journal WHERE user_id = ?",
+    "returns": false
+  },
+  "DELETE FROM natal_profiles WHERE user_id = ?": {
+    "id": "b0f9cede03affc4d12d99d0c0bc44c5fd752e46cf1bf4a77ca05dc8ea7d254cb",
+    "sql": "DELETE FROM public.natal_profiles WHERE user_id = ?",
+    "returns": false
+  },
+  "DELETE FROM natal_studio WHERE user_id = ?": {
+    "id": "c92ed415c497292c3b863d3e5ae1e5cea4d34efa04efd0a9cece05e89b2508a1",
+    "sql": "DELETE FROM public.natal_studio WHERE user_id = ?",
+    "returns": false
+  },
+  "DELETE FROM natal_reflections WHERE user_id = ?": {
+    "id": "5e9a47c297f17dbf2122cbaf1fe6f63cb00fd11a9fc46340a47cefbd4da733b1",
+    "sql": "DELETE FROM public.natal_reflections WHERE user_id = ?",
+    "returns": false
+  },
+  "DELETE FROM natal_research_consent WHERE user_id = ?": {
+    "id": "6e6d18354f1955bbec36544fbb0ada19e6f268872aba37972dd55a6bb43e324c",
+    "sql": "DELETE FROM public.natal_research_consent WHERE user_id = ?",
+    "returns": false
+  },
+  "SELECT COUNT(*) AS total FROM natal_purchases p JOIN natal_checkout_intents i ON i.id = p.intent_id WHERE p.test_mode = 1 AND i.variant_id IN (?,?)": {
+    "id": "689571626f5c1ce05938e7f91fd158575f43eb2e8157f360278654cf60e615bb",
+    "sql": "SELECT COUNT(*) AS total FROM public.natal_purchases p JOIN public.natal_checkout_intents i ON i.id = p.intent_id WHERE p.test_mode = 1 AND i.variant_id IN (?,?)",
+    "returns": true
+  },
+  "SELECT COUNT(*) AS total FROM natal_checkout_intents WHERE user_id = ? AND created_at >= ?": {
+    "id": "71c6caaaaa365625ef1afa6ce67c6740241b360e796b33797f9b0d7076ba0128",
+    "sql": "SELECT COUNT(*) AS total FROM public.natal_checkout_intents WHERE user_id = ? AND created_at >= ?",
+    "returns": true
+  },
+  "INSERT INTO natal_checkout_intents (id,user_id,product,variant_id,price,test_mode,created_at) VALUES (?,?,?,?,?,?,?)": {
+    "id": "9295e434399eab9a8f1ce76024bba077abe7806cc2c27aeb294faf97ba5ea19d",
+    "sql": "INSERT INTO public.natal_checkout_intents (id,user_id,product,variant_id,price,test_mode,created_at) VALUES (?,?,?,?,?,?,?)",
+    "returns": false
+  },
+  "UPDATE natal_checkout_intents SET checkout_url = ? WHERE id = ? AND user_id = ?": {
+    "id": "bd6162f5353f422ad4ea5109d41bf09ecb630d42bf36c4a7363eb5fb1f709ddc",
+    "sql": "UPDATE public.natal_checkout_intents SET checkout_url = ? WHERE id = ? AND user_id = ?",
+    "returns": false
+  },
+  "SELECT * FROM natal_checkout_intents WHERE id = ?": {
+    "id": "8b3f43f9563570b942e0e56c7bb72e1fe59b78c701e5f2dad250e6b166793036",
+    "sql": "SELECT * FROM public.natal_checkout_intents WHERE id = ?",
+    "returns": true
+  },
+  "UPDATE natal_checkout_intents SET order_id = ? WHERE id = ? AND (order_id IS NULL OR order_id = ?)": {
+    "id": "970bfd15eb89cc6dd1476206afe417e86900e24cd0d78c248af4d92a69fa7b0b",
+    "sql": "UPDATE public.natal_checkout_intents SET order_id = ? WHERE id = ? AND (order_id IS NULL OR order_id = ?)",
+    "returns": false
+  },
+  "INSERT INTO natal_purchases (order_id,intent_id,user_id,product,status,test_mode,paid_at,expires_at,provider_updated_at) SELECT ?,?,?,?,?,?,?,?,? WHERE EXISTS(SELECT 1 FROM natal_checkout_intents WHERE id = ? AND order_id = ?) ON CONFLICT(order_id) DO UPDATE SET status = CASE WHEN natal_purchases.status = 'revoked' THEN 'revoked' ELSE excluded.status END,provider_updated_at = excluded.provider_updated_at WHERE natal_purchases.intent_id = excluded.intent_id AND (excluded.status = 'revoked' OR excluded.provider_updated_at >= natal_purchases.provider_updated_at)": {
+    "id": "37de4e7474838b5a560a091edf1b1d69b8121aae261756b2fe135f6ce8beed7a",
+    "sql": "INSERT INTO public.natal_purchases (order_id,intent_id,user_id,product,status,test_mode,paid_at,expires_at,provider_updated_at) SELECT ?,?,?,?,?,?,?,?,? WHERE EXISTS(SELECT 1 FROM public.natal_checkout_intents WHERE id = ? AND order_id = ?) ON CONFLICT(order_id) DO UPDATE SET status = CASE WHEN natal_purchases.status = 'revoked' THEN 'revoked' ELSE excluded.status END,provider_updated_at = excluded.provider_updated_at WHERE natal_purchases.intent_id = excluded.intent_id AND (excluded.status = 'revoked' OR excluded.provider_updated_at >= natal_purchases.provider_updated_at)",
+    "returns": false
+  },
+  "INSERT INTO natal_account_emails (id,user_id,session_key,kind,payload,created_at) VALUES (?,?,?,?,?,?) ON CONFLICT(id) DO NOTHING": {
+    "id": "ae2a8d45a84d8415df555c3eddbc66e4bc25d7105c1e7b85e201bcb0faf9ec0c",
+    "sql": "INSERT INTO public.natal_account_emails (id,user_id,session_key,kind,payload,created_at) VALUES (?,?,?,?,?,?) ON CONFLICT(id) DO NOTHING",
+    "returns": false
+  },
+  "SELECT id,user_id,session_key,kind,payload,status FROM natal_account_emails WHERE id = ? AND user_id = ?": {
+    "id": "cc625ae2606eef6139b2c7c7bdbb51757561d3746487d833b34be31e74ee4c59",
+    "sql": "SELECT id,user_id,session_key,kind,payload,status FROM public.natal_account_emails WHERE id = ? AND user_id = ?",
+    "returns": true
+  },
+  "UPDATE natal_account_emails SET status = 'sending', attempts = attempts + 1, claimed_at = ?, first_attempt_at = COALESCE(first_attempt_at,?), last_error = NULL WHERE id = ? AND user_id = ? AND attempts < 3 AND (first_attempt_at IS NULL OR first_attempt_at > ?) AND (status IN ('pending','failed') OR (status = 'sending' AND claimed_at < ?)) RETURNING id": {
+    "id": "385be313d2881c6d6897adcd2939733193ed890649d78a9d82b2a4e4b4647849",
+    "sql": "UPDATE public.natal_account_emails SET status = 'sending', attempts = attempts + 1, claimed_at = ?, first_attempt_at = COALESCE(first_attempt_at,?), last_error = NULL WHERE id = ? AND user_id = ? AND attempts < 3 AND (first_attempt_at IS NULL OR first_attempt_at > ?) AND (status IN ('pending','failed') OR (status = 'sending' AND claimed_at < ?)) RETURNING id",
+    "returns": true
+  },
+  "UPDATE natal_account_emails SET status = 'accepted', accepted_at = ?, provider_id = ?, last_error = NULL WHERE id = ? AND user_id = ?": {
+    "id": "bc6ca88787aacded15c89ae76c02d6a3ad7649f9b3a47af44a2d1b722c3a5e70",
+    "sql": "UPDATE public.natal_account_emails SET status = 'accepted', accepted_at = ?, provider_id = ?, last_error = NULL WHERE id = ? AND user_id = ?",
+    "returns": false
+  },
+  "UPDATE natal_account_emails SET status = 'failed', last_error = ? WHERE id = ? AND user_id = ?": {
+    "id": "84fe344a72df2bbc342b5a646d3c146eff5c71f641aed8ca8b61a2b78f4018c0",
+    "sql": "UPDATE public.natal_account_emails SET status = 'failed', last_error = ? WHERE id = ? AND user_id = ?",
+    "returns": false
+  },
+  "SELECT order_id,product,status,test_mode,paid_at,expires_at FROM natal_purchases WHERE user_id = ? ORDER BY paid_at DESC": {
+    "id": "e598c1efe57da0fc407cb1b82d9c1399adaafdf8fe457df522389273371667ff",
+    "sql": "SELECT order_id,product,status,test_mode,paid_at,expires_at FROM public.natal_purchases WHERE user_id = ? ORDER BY paid_at DESC",
+    "returns": true
+  },
+  "INSERT OR IGNORE INTO natal_research_events (id,user_id,event,day) VALUES (?,?,?,?)": {
+    "id": "3f0a970129cf6db1b7e31aac7ba2b58de9e82f478f0669bf71816d57926e1bba",
+    "sql": "INSERT INTO public.natal_research_events (id,user_id,event,day) VALUES (?,?,?,?) ON CONFLICT DO NOTHING",
+    "returns": false
+  },
+  "DELETE FROM natal_service_usage WHERE day < date('now','-29 days')": {
+    "id": "e212831a7c95c4e1d689b5c60d193c6f80678e2033fcb9124c63c1d364f52d92",
+    "sql": "DELETE FROM public.natal_service_usage WHERE day < to_char(CURRENT_DATE - INTERVAL '29 days','YYYY-MM-DD')",
+    "returns": false
+  },
+  "INSERT INTO natal_service_usage (id,user_id,service,day,count) VALUES (?,?,?,?,1) ON CONFLICT(id) DO UPDATE SET count = count + 1 WHERE count < 40 RETURNING count": {
+    "id": "f21427db4ae93298c7a54297bea6e064e5c1784b60f84cf3eca1759d623d86b4",
+    "sql": "INSERT INTO public.natal_service_usage (id,user_id,service,day,count) VALUES (?,?,?,?,1) ON CONFLICT(id) DO UPDATE SET count = natal_service_usage.count + 1 WHERE natal_service_usage.count < 40 RETURNING count",
+    "returns": true
+  },
+  "INSERT INTO natal_service_usage (id,user_id,service,day,count) VALUES (?,?,?,?,1) ON CONFLICT(id) DO UPDATE SET count = count + 1 WHERE count < ? RETURNING count": {
+    "id": "5d8c04209f53c4ed4bec45d7af17e0a2ee62a993393b33d81c0174dffea84e8d",
+    "sql": "INSERT INTO public.natal_service_usage (id,user_id,service,day,count) VALUES (?,?,?,?,1) ON CONFLICT(id) DO UPDATE SET count = natal_service_usage.count + 1 WHERE natal_service_usage.count < ? RETURNING count",
+    "returns": true
+  },
+  "UPDATE natal_service_usage SET count = MAX(0,count - 1) WHERE id = ?": {
+    "id": "41bb6ecf6ddc7922244a0de77e1096389e19bdb09550097febe4ae442e109d7e",
+    "sql": "UPDATE public.natal_service_usage SET count = GREATEST(0,count - 1) WHERE id = ?",
+    "returns": false
+  }
+}

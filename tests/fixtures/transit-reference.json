@@ -1,0 +1,443 @@
+{
+  "source": "Swiss Ephemeris 2.10.03 Moshier; independent six-hour search with 22-iteration roots",
+  "events": [
+    {
+      "body": "Mercury",
+      "natal": "Rising",
+      "aspect": "Conjunction",
+      "utc": "2026-10-12T08:51:55.634251Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Venus",
+      "aspect": "Conjunction",
+      "utc": "2026-10-16T11:32:12.406712Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Venus",
+      "aspect": "Conjunction",
+      "utc": "2026-10-31T00:57:46.958141Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Rising",
+      "aspect": "Conjunction",
+      "utc": "2026-11-03T03:49:59.285603Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Rising",
+      "aspect": "Conjunction",
+      "utc": "2026-11-25T04:49:48.446903Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Venus",
+      "aspect": "Conjunction",
+      "utc": "2026-11-27T21:54:04.799137Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mars",
+      "aspect": "Conjunction",
+      "utc": "2026-12-08T01:55:31.477833Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mercury",
+      "aspect": "Sextile",
+      "utc": "2026-12-15T00:17:52.858715Z"
+    },
+    {
+      "body": "Uranus",
+      "natal": "Mars",
+      "aspect": "Opposition",
+      "utc": "2026-12-22T14:11:47.079220Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Sun",
+      "aspect": "Sextile",
+      "utc": "2026-12-26T03:50:45.448780Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Moon",
+      "aspect": "Sextile",
+      "utc": "2026-12-28T22:08:59.604664Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mercury",
+      "aspect": "Square",
+      "utc": "2027-01-03T01:53:38.068027Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Rising",
+      "aspect": "Sextile",
+      "utc": "2027-01-03T13:53:15.717716Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Venus",
+      "aspect": "Sextile",
+      "utc": "2027-01-05T19:14:12.735615Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Sun",
+      "aspect": "Square",
+      "utc": "2027-01-13T14:59:44.789944Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mars",
+      "aspect": "Sextile",
+      "utc": "2027-01-14T19:26:48.284283Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Moon",
+      "aspect": "Square",
+      "utc": "2027-01-16T05:19:43.552837Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mercury",
+      "aspect": "Trine",
+      "utc": "2027-01-21T02:52:50.330715Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Rising",
+      "aspect": "Square",
+      "utc": "2027-01-21T14:27:49.960499Z"
+    },
+    {
+      "body": "Pluto",
+      "natal": "Moon",
+      "aspect": "Square",
+      "utc": "2027-01-21T16:55:52.571583Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Venus",
+      "aspect": "Square",
+      "utc": "2027-01-23T18:44:02.030811Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Sun",
+      "aspect": "Trine",
+      "utc": "2027-02-01T13:42:20.235615Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mars",
+      "aspect": "Square",
+      "utc": "2027-02-03T09:18:16.424389Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Moon",
+      "aspect": "Trine",
+      "utc": "2027-02-06T09:06:05.553761Z"
+    },
+    {
+      "body": "Neptune",
+      "natal": "Mars",
+      "aspect": "Trine",
+      "utc": "2027-02-11T11:42:47.299747Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Moon",
+      "aspect": "Trine",
+      "utc": "2027-02-13T01:33:35.677929Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mars",
+      "aspect": "Square",
+      "utc": "2027-02-16T01:21:59.187641Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Sun",
+      "aspect": "Trine",
+      "utc": "2027-02-17T22:53:52.585430Z"
+    },
+    {
+      "body": "Saturn",
+      "natal": "Mercury",
+      "aspect": "Opposition",
+      "utc": "2027-03-02T12:37:43.888264Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Sun",
+      "aspect": "Trine",
+      "utc": "2027-03-19T00:05:17.933178Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mars",
+      "aspect": "Square",
+      "utc": "2027-03-20T19:12:12.873058Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Moon",
+      "aspect": "Trine",
+      "utc": "2027-03-22T19:37:20.257359Z"
+    },
+    {
+      "body": "Jupiter",
+      "natal": "Venus",
+      "aspect": "Square",
+      "utc": "2027-03-23T09:13:34.166737Z"
+    },
+    {
+      "body": "Uranus",
+      "natal": "Mars",
+      "aspect": "Opposition",
+      "utc": "2027-03-27T07:03:50.732632Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Rising",
+      "aspect": "Trine",
+      "utc": "2027-03-29T16:25:58.511066Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Venus",
+      "aspect": "Trine",
+      "utc": "2027-04-01T04:10:41.236782Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mars",
+      "aspect": "Trine",
+      "utc": "2027-04-10T12:17:21.485882Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mercury",
+      "aspect": "Opposition",
+      "utc": "2027-04-16T10:44:14.103756Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Sun",
+      "aspect": "Opposition",
+      "utc": "2027-04-25T05:28:42.782421Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Moon",
+      "aspect": "Opposition",
+      "utc": "2027-04-27T07:23:00.311108Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Rising",
+      "aspect": "Opposition",
+      "utc": "2027-05-01T12:51:53.745975Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Venus",
+      "aspect": "Opposition",
+      "utc": "2027-05-03T05:05:51.173687Z"
+    },
+    {
+      "body": "Jupiter",
+      "natal": "Venus",
+      "aspect": "Square",
+      "utc": "2027-05-04T02:40:34.130001Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mars",
+      "aspect": "Opposition",
+      "utc": "2027-05-10T09:19:59.524212Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mercury",
+      "aspect": "Trine",
+      "utc": "2027-05-16T03:52:50.646572Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Sun",
+      "aspect": "Trine",
+      "utc": "2027-05-29T09:12:13.782864Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Moon",
+      "aspect": "Trine",
+      "utc": "2027-06-04T18:24:39.526234Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Moon",
+      "aspect": "Trine",
+      "utc": "2027-06-17T00:05:35.767078Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Sun",
+      "aspect": "Trine",
+      "utc": "2027-06-25T03:46:23.115864Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Sun",
+      "aspect": "Trine",
+      "utc": "2027-07-13T11:17:21.906452Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Moon",
+      "aspect": "Trine",
+      "utc": "2027-07-18T04:28:43.867321Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mercury",
+      "aspect": "Square",
+      "utc": "2027-07-24T07:11:29.624691Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Rising",
+      "aspect": "Trine",
+      "utc": "2027-07-24T19:23:36.102505Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Venus",
+      "aspect": "Trine",
+      "utc": "2027-07-26T23:08:12.608929Z"
+    },
+    {
+      "body": "Jupiter",
+      "natal": "Sun",
+      "aspect": "Sextile",
+      "utc": "2027-07-29T05:24:09.784184Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Sun",
+      "aspect": "Square",
+      "utc": "2027-08-02T18:14:21.442280Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mars",
+      "aspect": "Trine",
+      "utc": "2027-08-03T17:40:33.712864Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Moon",
+      "aspect": "Square",
+      "utc": "2027-08-04T21:24:42.528591Z"
+    },
+    {
+      "body": "Jupiter",
+      "natal": "Mars",
+      "aspect": "Square",
+      "utc": "2027-08-07T17:40:07.567120Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mercury",
+      "aspect": "Sextile",
+      "utc": "2027-08-08T20:54:10.596142Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Rising",
+      "aspect": "Square",
+      "utc": "2027-08-09T06:16:07.910099Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Venus",
+      "aspect": "Square",
+      "utc": "2027-08-11T00:21:14.722195Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Sun",
+      "aspect": "Sextile",
+      "utc": "2027-08-17T12:27:46.965008Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mars",
+      "aspect": "Square",
+      "utc": "2027-08-18T13:27:46.874027Z"
+    },
+    {
+      "body": "Jupiter",
+      "natal": "Moon",
+      "aspect": "Sextile",
+      "utc": "2027-08-18T20:25:53.424740Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Moon",
+      "aspect": "Sextile",
+      "utc": "2027-08-19T19:44:07.764301Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Rising",
+      "aspect": "Sextile",
+      "utc": "2027-08-24T19:42:09.379749Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Venus",
+      "aspect": "Sextile",
+      "utc": "2027-08-26T21:44:34.737453Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mars",
+      "aspect": "Sextile",
+      "utc": "2027-09-05T04:38:00.899906Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Mercury",
+      "aspect": "Conjunction",
+      "utc": "2027-09-12T14:51:55.067768Z"
+    },
+    {
+      "body": "Pluto",
+      "natal": "Moon",
+      "aspect": "Square",
+      "utc": "2027-09-15T04:19:26.386700Z"
+    },
+    {
+      "body": "Mercury",
+      "natal": "Sun",
+      "aspect": "Conjunction",
+      "utc": "2027-09-28T03:09:54.865894Z"
+    },
+    {
+      "body": "Jupiter",
+      "natal": "Rising",
+      "aspect": "Sextile",
+      "utc": "2027-09-29T23:46:29.268208Z"
+    }
+  ]
+}

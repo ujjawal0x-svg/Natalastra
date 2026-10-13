@@ -1,0 +1,4 @@
+import {billingConfig,products} from '../../../../lib/billing';
+import {database,apiError} from '../../../../lib/storage';
+export const dynamic='force-dynamic';
+export async function GET(){try{const c=billingConfig();let verified=false;if(c.ready&&c.paid&&!c.test){const probe=await database().prepare('SELECT COUNT(*) AS total FROM natal_purchases p JOIN natal_checkout_intents i ON i.id = p.intent_id WHERE p.test_mode = 1 AND i.variant_id IN (?,?)').bind(c.variants.dossier||'',c.variants.pass||'').first<{total:number}>();verified=(probe?.total||0)>0;}return Response.json({plans:Object.entries(products).map(([id,p])=>({id,...p})),complimentary:!c.paid||!c.ready||(!c.test&&!verified),dossierLocked:true,testMode:c.test,paidEnabled:c.paid&&c.ready&&(c.test||verified)},{headers:{'Cache-Control':'no-store'}});}catch(e){return apiError(e);}}

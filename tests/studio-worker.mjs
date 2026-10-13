@@ -1,0 +1,55 @@
+import {createRequire} from 'node:module';
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const root=process.cwd();
+const require=createRequire(fs.realpathSync(root+'/node_modules/wrangler/package.json'));
+const {Miniflare}=require('miniflare');
+const mf=new Miniflare({modules:fs.readdirSync(root+'/dist/server',{recursive:true}).filter(p=>p.endsWith('.js')).sort((a,b)=>a==='index.js'?-1:b==='index.js'?1:0).map(p=>({type:'ESModule',path:root+'/dist/server/'+p})),compatibilityDate:'2026-05-15',compatibilityFlags:['nodejs_compat'],d1Databases:['DB'],serviceBindings:{ASSETS:async()=>new Response('Not found',{status:404})}});
+try{
+const db=await mf.getD1Database('DB');for(const file of fs.readdirSync(root+'/drizzle').filter(f=>f.endsWith('.sql')).sort())for(const stmt of fs.readFileSync(root+'/drizzle/'+file,'utf8').split('--> statement-breakpoint'))if(stmt.trim())await db.exec(stmt.trim().replaceAll('\n',' '));
+const auth={'oai-authenticated-user-id':'studio-a','oai-authenticated-user-email':'a@example.test',Origin:'https://local.test','X-Natalastra-Request':'1','Content-Type':'application/json'};
+const other={...auth,'oai-authenticated-user-id':'studio-b','oai-authenticated-user-email':'b@example.test'};
+async function req(body,headers=auth,path='/api/studio'){const r=await mf.dispatchFetch('https://local.test'+path,{method:body?'POST':'GET',headers,body:body?JSON.stringify(body):undefined});return {status:r.status,data:await r.json()};}
+const birth={name:'Sample',date:'1995-10-24',time:'08:30',city:0,unknown:false,fold:'earlier'};
+assert.equal((await req(undefined,{})).status,401);
+assert.equal((await req({action:'create',record:{kind:'lens',birth,observation:'A good day.'}},{...auth,Origin:'https://elsewhere.test'})).status,403);
+const cast=await req({action:'create',record:{kind:'cast',birth,situation:'boundaries',voices:['sun','moon'],response:'I will ask for time.'}});assert.equal(cast.status,200);assert.ok(cast.data.record.data.context.basis[0].includes('Scorpio'));
+assert.equal((await req({action:'create',record:{kind:'cast',birth:{...birth,unknown:true},situation:'boundaries',voices:['rising'],response:'test'}})).status,400);
+const lens=await req({action:'create',record:{kind:'lens',birth,observation:'I enjoyed sharing my work.'}});assert.equal(lens.status,200);assert.ok(lens.data.record.data.context.sun);
+assert.equal((await req({action:'review',id:lens.data.record.id,note:'Not this time.',rating:'does-not-fit'})).status,200);
+assert.equal((await req({action:'review',id:lens.data.record.id,note:'Overwrite',rating:'resonates'},other)).status,404);
+assert.equal((await req({action:'delete',id:lens.data.record.id},other)).status,404);
+assert.equal((await req(undefined,other)).data.records.length,0);
+const letter=await req({action:'create',record:{kind:'letter',title:'Future me',body:'Private secret',revealAt:new Date(Date.now()+86400000).toISOString()}});assert.equal(letter.status,200);assert.equal(letter.data.record.locked,true);assert.equal(letter.data.record.data.body,undefined);
+let list=(await req()).data.records;assert.equal(list.find(x=>x.id===letter.data.record.id).data.body,undefined);
+assert.equal((await req({action:'review',id:letter.data.record.id,note:'too soon'})).status,409);
+assert.equal((await req(undefined,auth,'/api/studio?export=1')).data.records.find(x=>x.id===letter.data.record.id).data.body,'Private secret');
+const raw=await db.prepare('SELECT payload FROM natal_studio WHERE id = ?').bind(letter.data.record.id).first();const content=JSON.parse(raw.payload);content.revealAt=new Date(Date.now()-1000).toISOString();await db.prepare('UPDATE natal_studio SET payload = ? WHERE id = ?').bind(JSON.stringify(content),letter.data.record.id).run();
+list=(await req()).data.records;assert.equal(list.find(x=>x.id===letter.data.record.id).locked,false);assert.equal(list.find(x=>x.id===letter.data.record.id).data.body,'Private secret');
+assert.equal((await req({action:'review',id:letter.data.record.id,note:'I see it differently now.'})).status,200);
+assert.equal((await req({action:'create',record:{kind:'letter',title:'Past',body:'x',revealAt:new Date(Date.now()-1000).toISOString()}})).status,400);
+assert.equal((await req({action:'create',record:{kind:'archetype',qualities:['Explorer','Creator'],example:'Tried painting.',intention:'Practice weekly.'}})).status,200);
+assert.equal((await req({action:'create',record:{kind:'archetype',qualities:['Invalid'],example:'x',intention:'x'}})).status,400);
+assert.equal((await req(undefined,auth,'/api/vault?export=1')).data.studio.length,4);
+assert.equal((await req({action:'delete',id:cast.data.record.id})).status,200);
+assert.equal((await req()).data.records.some(x=>x.id===cast.data.record.id),false);
+
+const reflection={action:'create',birth,day:'2026-10-09',lang:'en',observation:'I asked for more time.',note:'I will check in tomorrow.',rating:'useful',completed:true};
+assert.equal((await req(undefined,{},'/api/reflections')).status,401);
+assert.equal((await req(reflection,{...auth,Origin:'https://evil.test'},'/api/reflections')).status,403);
+assert.equal((await req({...reflection,rating:'made-up'},auth,'/api/reflections')).status,400);
+assert.equal((await req({...reflection,day:'2026-02-30'},auth,'/api/reflections')).status,400);
+assert.equal((await req({...reflection,day:'9999-01-01'},auth,'/api/reflections')).status,400);
+const reflectionResult=await req({...reflection,reading:{title:'Untrusted client reading'}},auth,'/api/reflections');assert.equal(reflectionResult.status,200);
+const reflectionId=reflectionResult.data.record.id;assert.notEqual(reflectionResult.data.record.reading.title,'Untrusted client reading');assert.ok(reflectionResult.data.record.reading.basis);
+assert.equal((await req(undefined,other,'/api/reflections')).data.records.length,0);
+assert.equal((await req({action:'review',id:reflectionId,outcome:'helped',note:'It helped.'},other,'/api/reflections')).status,404);
+assert.equal((await req({action:'review',id:reflectionId,outcome:'helped',note:'It helped.'},auth,'/api/reflections')).status,200);
+assert.equal((await req(undefined,auth,'/api/reflections')).data.records[0].review.note,'It helped.');
+assert.equal((await req(undefined,auth,'/api/vault?export=1')).data.reflections[0].observation,'I asked for more time.');
+assert.equal((await req({action:'delete',id:reflectionId},other,'/api/reflections')).status,404);
+const disposable=await req({...reflection,day:'2026-10-08'},auth,'/api/reflections');assert.equal((await req({action:'delete',id:disposable.data.record.id},auth,'/api/reflections')).status,200);
+assert.equal((await req({action:'delete-archive',confirm:'DELETE'},auth,'/api/vault')).status,200);assert.equal((await req(undefined,auth,'/api/reflections')).data.records.length,0);assert.equal((await req()).data.records.length,0);
+const page=await mf.dispatchFetch('https://local.test/');assert.equal(page.status,200);const html=await page.text();assert.ok(html.includes('Create my birth chart'));assert.ok(!html.includes('Checking for your saved birth profile'));const chartPage=await mf.dispatchFetch('https://local.test/chart');assert.equal(chartPage.status,200);assert.ok((await chartPage.text()).includes('Checking for your saved birth profile'));assert.ok(!html.includes('Alex')&&!html.includes('Jamie'));
+console.log('PASS: daily reflection snapshots, invalid dates, feedback, follow-up, export, ownership and deletion; all four record types, chart snapshots, validation, letter embargo/open/export, reviews, account isolation, deletion and homepage entry.');
+}finally{await mf.dispose();}

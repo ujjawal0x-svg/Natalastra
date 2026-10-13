@@ -1,0 +1,6 @@
+import {owner,mutationGuard,limitedJson,apiError,ApiError} from '../../../lib/storage';
+import {requireAccess} from '../../../lib/billing';
+import {birthSchema} from '../../../lib/profile';
+import {buildTransitTimeline,transitBodies,slowTransitBodies,TransitBody} from '../../../lib/transit-timeline';
+export const dynamic='force-dynamic';
+export async function POST(request:Request){try{mutationGuard(request);const user=await owner();await requireAccess(user.userId,'pass');const body=await limitedJson(request),birth=birthSchema.safeParse(body?.birth);if(!birth.success)throw new ApiError(400,'Check your birth details.');const date=body.start;if(typeof date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(date)||date<'1900-01-01'||date>'2099-12-31')throw new ApiError(400,'Choose a transit start date from 1900–2099.');if(body.body!=='overview'&&!transitBodies.includes(body.body))throw new ApiError(400,'Choose a supported transit planet.');let timeline;try{timeline=buildTransitTimeline(birth.data,date+'T00:00:00Z',body.body==='overview'?slowTransitBodies:[body.body as TransitBody]);}catch(e){throw new ApiError(400,e instanceof Error?e.message:'Could not calculate this timeline.');}return Response.json(timeline,{headers:{'Cache-Control':'private, no-store'}});}catch(e){return apiError(e);}}

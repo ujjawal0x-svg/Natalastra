@@ -1,0 +1,1 @@
+export function SiteFooter(){return <nav className="site-policy-links" aria-label="Help and policies"><a href="/pricing">Pricing</a><a href="/accuracy">Calculation accuracy</a><a href="/support">Support</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/refunds">Refunds</a></nav>;}

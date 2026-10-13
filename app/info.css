@@ -1,0 +1,38 @@
+.info-shell{max-width:1180px;width:100%;margin:auto;padding:24px 32px 35px;color:var(--ink);min-height:100dvh}.info-header{display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid #d6d6cf;padding:0 0 24px}.info-back{display:inline-block;margin:26px 0;font-size:13px}.info-heading h1{font:800 clamp(30px,4vw,44px)/1.15 var(--sans);letter-spacing:-.7px;margin:14px 0 28px;overflow-wrap:break-word}.info-body{max-width:950px}.info-body p,.info-body li{font:14px/1.85 var(--sans);color:#555548;overflow-wrap:anywhere}.info-body section{margin:28px 0}.info-body h2{font:800 23px/1.3 var(--sans);margin-bottom:14px}.info-body ul{padding-left:22px}.info-body li{margin:10px 0}.info-body a:not(.public-primary){text-decoration:underline;text-underline-offset:3px}.site-policy-links{display:flex;flex-wrap:wrap;gap:15px 22px;padding:25px 0;margin-top:30px;border-top:1px solid #d6d6cf;font:12px/1.6 var(--sans)}.public-home>.site-policy-links{max-width:1168px;margin:0 auto;padding:22px 0}.help-grid{display:grid;grid-template-columns:1fr 1fr;gap:35px}.help-grid>section{min-width:0}.help-grid details{border-bottom:1px solid #d6d6cf;padding:16px 0}.help-grid summary{cursor:pointer;font-size:14px;font-weight:700;line-height:1.6}.help-grid form label{display:block;font-size:13px;margin:16px 0}.help-grid textarea,.help-grid select{display:block;width:100%;border:1.5px solid var(--ink);border-radius:0;padding:12px;margin-top:8px;background:white;font:16px/1.6 var(--sans);color:var(--ink);min-width:0}.help-grid textarea{resize:vertical}.help-small{font-size:12px!important}.launch-checks{display:grid;gap:14px}.launch-check{border:2px solid var(--ink);padding:20px;background:#fff;display:grid;grid-template-columns:110px 1fr;gap:20px}.launch-check strong{font-size:13px}.launch-check p{margin:7px 0}.launch-status{font-size:11px;font-weight:700;align-self:start;padding:6px 8px;border:1px solid var(--ink);text-align:center;background:var(--gold)}.launch-check[data-state=ready] .launch-status{background:#e4efda}.info-body code{overflow-wrap:anywhere;font-size:12px}.info-body .access-grid{gap:22px}.info-body .access-grid article{border:2px solid var(--ink);background:var(--gold);box-shadow:4px 4px 0 var(--ink);padding:24px;min-width:0}.info-body .access-grid{display:grid;grid-template-columns:1fr 1fr}.info-body .dark-button{display:inline-flex;background:var(--ink);color:var(--gold);padding:13px 18px;border:2px solid var(--ink);font-weight:700;min-height:44px}.info-body .access-price{font-size:38px;display:block;margin:20px 0}.info-body .price-term{font-size:14px}.info-body .research-panel{padding:24px 0;border-top:1px solid #d6d6cf}.info-body button:disabled{opacity:.6;cursor:wait}.info-body .text-button{padding:12px 0;text-decoration:underline}.info-body .access-intro h2{font-size:24px}.info-body details p{margin-top:12px}.info-body a:focus-visible,.info-body button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+@media(max-width:650px){.info-shell{padding:22px 18px}.info-header{flex-wrap:wrap;gap:15px}.info-header .publication-brand{font-size:31px}.help-grid,.info-body .access-grid{grid-template-columns:1fr;gap:12px}.launch-check{grid-template-columns:1fr;gap:10px}.launch-status{justify-self:start}.public-home>.site-policy-links{margin:0 18px}.info-body .access-grid article{padding:22px}.site-policy-links{gap:13px 18px}}
+@media(min-width:651px) and (max-width:1230px){.public-home>.site-policy-links{margin-inline:32px}}
+/* Pricing and public information pages share the editorial grid. */
+.site-policy-links{flex-direction:row;align-items:center;justify-content:flex-start;gap:12px 24px}
+.info-shell{max-width:1120px;padding:28px 32px 30px}
+.info-shell .info-body{max-width:none}
+.info-shell .info-heading{max-width:820px;margin:10px 0 30px}
+.info-shell .info-heading h1{font-size:clamp(32px,4.4vw,52px);line-height:1.08;margin:12px 0 0}
+.info-shell .info-back{margin:24px 0 16px;padding:6px 0}
+.info-shell .access-section{margin:0}
+.access-intro{margin-bottom:24px;max-width:700px}
+.access-intro .eyebrow{margin-bottom:10px}
+.info-shell .access-intro h2{font-size:20px;margin:0 0 10px}
+.info-shell .access-intro p{font-size:14px;line-height:1.65}
+.info-shell .access-grid{gap:24px;align-items:stretch}
+.access-section .plan-card{display:flex;flex-direction:column;border-radius:0!important;padding:28px!important;box-shadow:4px 4px 0 var(--ink)}
+.access-section .plan-card[data-plan=pass]{background:#eee9dc}
+.access-section .plan-card .eyebrow{font-size:10px;letter-spacing:1px;line-height:1.6;margin-bottom:14px;color:#403b28}
+.access-section .plan-card h3{font:700 25px/1.2 var(--sans);letter-spacing:-.5px}
+.access-section .plan-card .access-price{font:800 48px/1 var(--sans);letter-spacing:-2px;display:flex;gap:10px;align-items:baseline;margin:20px 0 16px}
+.access-section .plan-card .price-term{font-size:12px;font-weight:400;letter-spacing:0}
+.access-section .plan-card>p{font-size:13px;line-height:1.65;color:#393628}
+.access-section .plan-features{list-style:none;padding:0;margin:18px 0 20px;display:grid;gap:11px}
+.access-section .plan-features li{display:flex;gap:10px;margin:0;font-size:13px;line-height:1.5;color:var(--ink)}
+.access-section .plan-features li span{font-weight:700}
+.access-section .plan-card .plan-tax{font-size:11px;margin:auto 0 12px;color:#5b5543}
+.access-section .plan-card .dark-button{width:100%;font-size:12px;line-height:1.5;text-decoration:none;justify-content:center;border-radius:0;box-shadow:none;min-height:44px}
+.info-shell button:disabled{cursor:not-allowed;opacity:.65}
+.access-section .purchase-panel{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px 20px;margin-top:32px;padding:22px 0}
+.access-section .purchase-panel h3{font:700 20px/1.3 var(--sans);grid-column:1}
+.access-section .purchase-panel p{grid-column:1;margin:0}
+.access-section .purchase-panel .text-button{grid-column:2;grid-row:1/3;padding:10px 14px;border:1px solid #b3afa2;text-decoration:none;font-size:12px;min-height:40px}
+.access-section .purchase-panel small{grid-column:1/-1;font-size:11px;color:#686456;margin-top:3px;line-height:1.5}
+.info-shell .research-panel summary{cursor:pointer;padding:3px 0;font-size:12px;font-weight:600}
+.info-shell .research-panel details summary{padding:10px 0}
+.info-shell .site-policy-links a{font-size:12px;padding:5px 0}
+@media(max-width:650px){.info-shell{padding:20px 18px 28px}.info-shell .info-heading{margin:0 0 22px}.info-shell .info-heading h1{font-size:34px}.info-shell .info-header{padding-bottom:18px}.info-shell .info-back{margin:16px 0 12px}.access-section .plan-card{padding:22px!important}.info-shell .access-grid{gap:20px}.access-section .plan-card .access-price{font-size:42px}.access-section .purchase-panel{grid-template-columns:1fr;gap:10px}.access-section .purchase-panel .text-button{grid-column:1;grid-row:auto;justify-self:start}.site-policy-links{gap:9px 18px}.access-section .plan-card h3{font-size:24px}}

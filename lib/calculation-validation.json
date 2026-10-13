@@ -1,0 +1,83 @@
+{
+  "reference": "Swiss Ephemeris 2.10.03",
+  "backend": "Moshier",
+  "charts": 10,
+  "planetToleranceDegrees": 0.02,
+  "ascendantToleranceDegrees": 0.01,
+  "maxErrorsDegrees": {
+    "Sun": 0.001283,
+    "Moon": 0.015035,
+    "Mercury": 0.000996,
+    "Venus": 0.005559,
+    "Mars": 0.001384,
+    "Jupiter": 0.001827,
+    "Saturn": 0.003022,
+    "Uranus": 0.002831,
+    "Neptune": 0.004779,
+    "Pluto": 0.002504,
+    "True Node": 0.003828,
+    "Ascendant": 0.000439
+  },
+  "cases": [
+    {
+      "id": "historical-london",
+      "utc": "1900-05-15T09:45:00.000Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278
+    },
+    {
+      "id": "historical-delhi",
+      "utc": "1920-08-11T05:50:00.000Z",
+      "latitude": 28.6139,
+      "longitude": 77.209
+    },
+    {
+      "id": "wartime-london",
+      "utc": "1942-07-01T10:30:00.000Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278
+    },
+    {
+      "id": "new-york",
+      "utc": "1995-10-24T12:30:00.000Z",
+      "latitude": 40.7128,
+      "longitude": -74.006
+    },
+    {
+      "id": "southern-hemisphere",
+      "utc": "2000-12-21T12:59:00.000Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093
+    },
+    {
+      "id": "dst-earlier",
+      "utc": "2023-11-05T05:30:00.000Z",
+      "latitude": 40.7128,
+      "longitude": -74.006
+    },
+    {
+      "id": "dst-later",
+      "utc": "2023-11-05T06:30:00.000Z",
+      "latitude": 40.7128,
+      "longitude": -74.006
+    },
+    {
+      "id": "mumbai",
+      "utc": "2026-10-10T06:30:00.000Z",
+      "latitude": 19.076,
+      "longitude": 72.8777
+    },
+    {
+      "id": "future-los-angeles",
+      "utc": "2099-03-22T01:30:00.000Z",
+      "latitude": 34.0522,
+      "longitude": -118.2437
+    },
+    {
+      "id": "high-latitude",
+      "utc": "2026-06-21T04:00:00.000Z",
+      "latitude": 69.6492,
+      "longitude": 18.9553
+    }
+  ]
+}
