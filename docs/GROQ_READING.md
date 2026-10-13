@@ -25,3 +25,11 @@ Responses are limited, schema-validated and rendered as plain React text. A fift
 ## Verification
 
 `node tests/groq-reading.mjs` exercises the provider client and route with mocked Cloudflare bindings/auth and provider responses. `node tests/guided-reading.mjs` checks the calculation-derived editorial evidence. TypeScript and a Worker build verify integration. These tests do not prove live Groq delivery, actual account auth flow or visual browser behavior.
+
+## Pattern Mirror
+
+The default optional AI experience offers four preset self-reported moments: saying yes when a limit is needed, going quiet, repeated explaining, and delaying a beginning. No free-text journal or private message is accepted. Moment selection is included in sharing consent and sent to Groq. Changing the moment/mode resets output, local feedback and consent and aborts outdated client requests.
+
+The strict response contains a possible pattern, an everyday non-astrological explanation with an alternative choice, a first-person sentence to copy, an optional two-minute experiment and a checking question. The provider must cite one or two server-issued evidence IDs. Unknown evidence IDs or unknown-time Moon/rising/house claims are rejected. Evidence IDs refer to calculated placements/aspects; they do not prove the psychological explanation. Feedback stays in the open view, does not train the model and does not change the chart. Copying requires an explicit click and reports a clipboard failure.
+
+This is a distinctive product direction, not a verified claim of market exclusivity. It is not a clinical assessment and user usefulness/return usage is still unvalidated.
