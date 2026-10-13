@@ -1,4 +1,4 @@
-export const workspaceViews=['chart','synastry','dossier','pricing','psychology','transits','journal','studio'] as const;
+export const workspaceViews=['chart','insights','synastry','dossier','pricing','psychology','transits','journal','studio'] as const;
 export type WorkspaceView=typeof workspaceViews[number];
 export function workspaceView(pathname:string):WorkspaceView|null{const path=pathname.replace(/\/+$/,'')||'/';if(path==='/dashboard')return 'transits';const name=path.slice(1);return workspaceViews.includes(name as WorkspaceView)?name as WorkspaceView:null;}
 export function handleWorkspaceClick(e:{button:number;metaKey:boolean;ctrlKey:boolean;shiftKey:boolean;altKey:boolean;defaultPrevented:boolean}){return !e.defaultPrevented&&e.button===0&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey;}

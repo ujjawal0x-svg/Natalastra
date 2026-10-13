@@ -9,7 +9,7 @@ import type {ReadingFocus} from '../lib/guided-reading';
 import type {Quincunx} from '../lib/quincunx';
 import type {AiReading,PatternMirror} from '../lib/groq-reading';
 type Result={id:string;reading?:AiReading;mirror?:PatternMirror;basis:string[]};
-export function AIReading({birth,focus,system,lang,aspect}:{birth:BirthData;focus:ReadingFocus;system:string;lang:Lang;aspect?:Quincunx}){
+export function AIReading({birth,focus,system,lang,aspect,expanded=false}:{birth:BirthData;focus:ReadingFocus;system:string;lang:Lang;aspect?:Quincunx;expanded?:boolean}){
  const hi=lang==='hi',t=(en:string,hn:string)=>hi?hn:en;
  const [mode,setMode]=useState<'mirror'|'reading'>('mirror'),[moment,setMoment]=useState<MirrorMoment|null>(null);
  const id=JSON.stringify([birth.date,birth.time,birth.location||birth.city,birth.unknown,birth.fold,focus,system,lang,mode,moment,aspect?.id]);
@@ -25,7 +25,7 @@ export function AIReading({birth,focus,system,lang,aspect}:{birth:BirthData;focu
  }catch(e){if(!abort.signal.aborted&&current.current===requestId)setError(e instanceof Error?e.message:'AI reading is unavailable.');}finally{if(controller.current===abort&&current.current===requestId)setBusy(false);}}
  const shown=result?.id===id?result:null,reading=shown?.reading,mirror=shown?.mirror;
  async function copyPhrase(){if(!mirror)return;const requestId=id;try{await navigator.clipboard.writeText(mirror.phrase);if(current.current===requestId){setCopied(true);setCopyError('');}}catch{if(current.current===requestId)setCopyError(t('Select the sentence to copy it.','वाक्य चुनकर कॉपी करें।'));}}
- return <details className="guided-ai"><summary><Sparkles size={15}/>{aspect?t('Explore this adjustment with AI','AI से इस adjustment को समझें'):t('Pattern Mirror · a moment, another possibility','Pattern Mirror · एक पल, दूसरा नज़रिया')}<span>{t('AI · optional','AI · वैकल्पिक')}</span></summary>
+ return <details className="guided-ai" open={expanded||undefined}><summary><Sparkles size={15}/>{aspect?t('Explore this adjustment with AI','AI से इस adjustment को समझें'):t('Pattern Mirror · a moment, another possibility','Pattern Mirror · एक पल, दूसरा नज़रिया')}<span>{t('AI · optional','AI · वैकल्पिक')}</span></summary>
  {!aspect&&<div className="mirror-intro"><h3>{t('Make room for a different response.','एक अलग जवाब की जगह बनाएँ।')}</h3><p>{t('Choose a moment you recognise. Explore a possible pattern, an everyday explanation and one sentence you could try. Your experience decides what fits.','अपना जाना-पहचाना पल चुनें। एक संभावित पैटर्न, सामान्य वजह और आजमाने लायक वाक्य देखें। क्या मेल खाता है, आपका अनुभव तय करता है।')}</p></div>}
  {!aspect&&<div className="mirror-mode" role="group" aria-label={t('AI experience','AI अनुभव')}>{(['mirror','reading'] as const).map((value,i)=><button key={value} type="button" aria-pressed={mode===value} onClick={()=>setMode(value)}>{i===0?t('A real-life moment','जीवन का एक पल'):t('A chart reading','चार्ट रीडिंग')}</button>)}</div>}
  {!aspect&&mode==='mirror'&&<div className="mirror-moments" role="group" aria-label={t('Choose your moment','अपना पल चुनें')}>{(Object.keys(mirrorMoments) as MirrorMoment[]).map(value=><button type="button" key={value} aria-pressed={moment===value} onClick={()=>setMoment(value)}>{mirrorMoments[value][lang]}<span aria-hidden="true">{moment===value?'✓':'↗'}</span></button>)}</div>}
