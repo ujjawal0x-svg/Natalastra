@@ -1,5 +1,7 @@
 declare namespace Cloudflare {
   interface Env {
+    GROQ_API_KEY?: string;
+    NATALASTRA_AI_ENABLED?: string;
     DB?: D1Database;
     NATALASTRA_DATABASE?: string;
     NATALASTRA_STORAGE_MAINTENANCE?: string;
